@@ -1,0 +1,151 @@
+.portfolio-card {
+    width: 350px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #fff; 
+    margin: 20px auto;
+}
+
+
+.card-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.personal-info {
+    margin-top: 15px;
+}
+
+.personal-info h3 {
+    margin: 5px 0;
+    font-size: 1.2em;
+}
+
+.personal-info p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.bio {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #333;
+    line-height: 1.4;
+}
+
+.avatar-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 1;
+    position: relative;
+}
+
+.avatar-border {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 110px;
+    height: 110px;
+    border: 1px solid #6187fb;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+
+.header {
+    background-color: #282c34;
+    padding: 20px;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+
+.portfolio-header {
+    background-color: #282c34;
+    padding: 10px;
+    color: white;
+    font-size: 0.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.portfolio-header h2 {
+    margin: 0;
+}
+
+.header-decoration {
+    width: 50px;
+    height: 4px;
+    background-color: #61dafb;
+    margin: 10px auto 0 auto;
+    border-radius: 2px;
+}
+
+.bio-section {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #333;
+    line-height: 1.4;
+}
+
+.bio-section h3 {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.bio-section p {
+    margin: 5px 0;
+}
+
+.bio-text {
+    margin-top: 10px;
+}
+
+.skills-container {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.skill-badge {
+    background-color: #7d61fb;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+}
+.skill-badge:hover {
+    background-color: #61c5fb;
+    cursor: pointer;
+}
+
+
+.card-content {
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
