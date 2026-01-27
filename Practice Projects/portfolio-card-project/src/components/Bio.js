@@ -1,7 +1,7 @@
 function Bio() {
 
     const bioText = "Passionate developer with 1.5 years of experience in creating intuitive user experiences and writing clean, efficient code.";
-    const skills = ["JavaScript", "React", "CSS", "HTML", "Node.js"];
+    const skills = ["JavaScript", "React", "CSS", "HTML", "Node.js" , "Express", "MongoDB"];
 
     return (
         <div className="bio-section">
