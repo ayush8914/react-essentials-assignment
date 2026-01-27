@@ -11,7 +11,8 @@ function App() {
 
   return (
    <div className="App">
-     <h1>Product Showcase</h1>
+     <header>
+      <h1>Product Showcase</h1></header>
      <Section title="Featured Products">
        {
         Products.slice(0,2).map(product => (

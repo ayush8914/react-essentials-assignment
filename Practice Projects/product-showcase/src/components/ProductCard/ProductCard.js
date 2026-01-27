@@ -11,13 +11,13 @@ function ProductCard({ name, description, price, image , isOnSale=false, salePri
       <div className='price-container'>
         {isOnSale ? (
           <>
-            <span className='original-price'>${price}</span>
+            <span className='original-price'>${price}</span> &nbsp;
             <span className='sale-price'>${salePrice}</span>
           </>
         ) : (
           <span className='price'>${price}</span>
         )}
-      </div>      <button onClick={() => alert(`Added ${name} to cart!`)}>Add to Cart</button>
+      </div>      <button className='btnAddToCard' onClick={() => alert(`Added ${name} to cart!`)}>Add to Cart</button>
     </Card>
   );
 }
