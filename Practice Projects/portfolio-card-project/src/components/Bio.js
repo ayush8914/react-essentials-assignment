@@ -10,7 +10,7 @@ function Bio() {
             <h3>Skills</h3>
             <div className="skills-container">
                 {skills.map((skill, index) => (
-                    <span key={index} className="skill-badge">{skill}</span>
+                    <span key={index} className="skill-badge">{skill} </span>
                 ))}
             </div>
         </div>
