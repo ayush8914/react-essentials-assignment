@@ -22,6 +22,16 @@ function App(){
     setNewTask(e.target.value);
   }
 
+  const toggleTaskCompletion = (taskId) => {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === taskId) {
+        return { ...task, completed: !task.completed };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
   return (
     <div>
       <h1>My Task List</h1>
@@ -29,7 +39,7 @@ function App(){
       <button onClick={handleAddTask}>Add a task</button>
       <ul>
         {tasks.map(task => (
-          <li key={task.id}>{task.title}</li>
+          <li key={task.id}> <input type="checkbox" checked={task.completed} onChange={() => toggleTaskCompletion(task.id)} /> {task.title}</li>
         ))}
       </ul>
     </div>
