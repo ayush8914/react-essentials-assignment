@@ -95,7 +95,7 @@ const BollywoodMovies = [
     {
         id: 10,
         title: "Bajrangi Bhaijaan",
-        rating: 8.0,
+        rating: 9.2,
         genre : "Adventure, Comedy, Drama",
         year : 2015,
         director: "Kabir Khan",
@@ -106,10 +106,62 @@ const BollywoodMovies = [
 
 
 export default function BollywoodMovie() {
+    
+    //state to manage loading
+    const [Loading, setLoading] = useState(false);
+
+    //state for genre filtering
+    const [selectedGenre, setSelectedGenre] = useState('All');
+
+    //state for movies data
+    const [movies, setMovies] = useState(BollywoodMovies);
+
+    //state for search term
+    const [searchTerm, setSearchTerm] = useState('');
+
+    //state for sorting
+    const [sortBy, setSortBy] = useState('title');
+
+    const RatingCategory = (rating) => {
+        if (rating >= 9.0) return 'blockbuster';
+        if (rating >= 8.5) return 'superhit';
+        if (rating >= 7.5) return 'hit';
+        return 'average';
+    }
+
 
     return (
-        <div className="bollywood-movies">
+        <div className={"bollywood-movies"}>
             <h1>bollywood Hits</h1>
+
+            {
+                Loading ? (
+                    <div className="loading-spinner">
+                        <p>Loading Movie...</p>
+                    </div>
+                ) : 
+                (
+                    <div className="main-content">
+                       <div className="movie-grid">
+                        {   movies.map((movie) => (
+                            <div key={movie.id} className={`movie-card ${RatingCategory(movie.rating)}`}>
+                                <img src={movie.image} alt={movie.title} className="movie-image" />
+                                <h3 className="movie-title">{movie.title}</h3>
+                                <p className="movie-year">{movie.year}</p>
+                                <p className="movie-genre">{movie.genre}</p>
+                                <p className="movie-rating">Rating: {movie.rating}</p>
+                                <p className="movie-director">Director: {movie.director}</p>
+                                <div className={`movie-rating rating-${RatingCategory(movie.rating)}`}>{movie.rating}/10</div>
+                                <p className="movie-cast">Cast: {movie.cast.join(', ')}</p>
+                            </div>
+                        ))
+
+                        }
+                       </div>
+                    </div>
+                )
+            }
+
         </div>
     );
 }

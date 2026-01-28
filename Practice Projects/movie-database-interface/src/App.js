@@ -4,7 +4,7 @@ import BollywoodMovies from './components/BollywoodMovies';
 function App(){
 
   return (
-    <div className='App'>
+    <div className="App">
       <BollywoodMovies />
     </div>  
   );

@@ -1,0 +1,96 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #0f2027 , #203a43,#2c5364);
+    color: #fff;
+    line-height: 1.6;
+}
+
+.bollywood-movies{
+    padding: 2rem;
+    text-align: center;
+}
+
+.bollywood-movies h1{
+    margin-bottom: 2rem;
+    font-size: 3rem;
+    color: #ffcc00;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.movie-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+
+.movie-card{
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.movie-card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+
+.movie-image{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.movie-title{
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+    color: #ffdd57;
+}
+
+.movie-director,.movie-genre,.movie-director,.movie-cast{
+    font-size: 0.95rem;
+    margin: 0.2rem 0;
+    color: #ccc;
+}
+
+
+.movie-rating{
+    margin-top: 0.7rem;
+    font-weight: bold;
+    padding: 0.4rem;
+    border-radius: 8px;
+}
+
+.rating-blockbuster{
+    background-color: #28a745;
+    color: #ccc;
+}
+
+.rating-hit{
+    background-color: #17a2b8;
+    color: #333;
+}
+
+.rating-average{
+    background-color: #ffc107;
+    color: #333;
+}
+
+.rating-flop{
+    background-color: #dc3545;
+    color: #fff;
+}
+
