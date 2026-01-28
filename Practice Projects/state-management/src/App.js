@@ -5,9 +5,16 @@ function App(){
   const [tasks, setTasks] = useState([]);
 
   const handleAddTask = () => {
-    console.log("Adding task:", newTask);
     if (newTask.trim() === '') return; // Prevent adding empty tasks
-    setTasks([...tasks, newTask]);
+
+    const task = {
+      id: Date.now(),
+      title: newTask.trim(),
+      completed: false
+    }
+
+    console.log("Adding task:", newTask);
+    setTasks([...tasks, task]);
     setNewTask(''); // Clear input after adding
   }
 
@@ -21,8 +28,8 @@ function App(){
       <input type="text" value={newTask} onChange={onInputChange} placeholder="Add a new task" />
       <button onClick={handleAddTask}>Add a task</button>
       <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>{task}</li>
+        {tasks.map(task => (
+          <li key={task.id}>{task.title}</li>
         ))}
       </ul>
     </div>
