@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React , {useState} from 'react';
 
-function App() {
+function App(){
+  const [newTask, setNewTask] = useState('');
+  const [tasks, setTasks] = useState([]);
+
+  const handleAddTask = () => {
+    console.log("Adding task:", newTask);
+    if (newTask.trim() === '') return; // Prevent adding empty tasks
+    setTasks([...tasks, newTask]);
+    setNewTask(''); // Clear input after adding
+  }
+
+  const onInputChange = (e) => {
+    setNewTask(e.target.value);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>My Task List</h1>
+      <input type="text" value={newTask} onChange={onInputChange} placeholder="Add a new task" />
+      <button onClick={handleAddTask}>Add a task</button>
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>{task}</li>
+        ))}
+      </ul>
     </div>
+    
   );
 }
 
