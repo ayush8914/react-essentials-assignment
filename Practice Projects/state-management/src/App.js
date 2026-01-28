@@ -4,6 +4,10 @@ function App(){
   const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState([]);
 
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter(task => task.completed).length;
+  const pendingTasks = totalTasks - completedTasks;
+
   const handleAddTask = () => {
     if (newTask.trim() === '') return; // Prevent adding empty tasks
 
@@ -46,6 +50,11 @@ function App(){
           </li>
         ))}
       </ul>
+      <div>
+        <p>Total Tasks: {totalTasks}</p>
+        <p>Completed Tasks: {completedTasks}</p>
+        <p>Pending Tasks: {pendingTasks}</p>
+      </div>
     </div>
     
   );
