@@ -39,7 +39,11 @@ function App(){
       <button onClick={handleAddTask}>Add a task</button>
       <ul>
         {tasks.map(task => (
-          <li key={task.id}> <input type="checkbox" checked={task.completed} onChange={() => toggleTaskCompletion(task.id)} /> {task.title}</li>
+          <li key={task.id}> 
+              <input type="checkbox" checked={task.completed} onChange={() => toggleTaskCompletion(task.id)} /> 
+              {task.title} &nbsp;
+              <button onClick={() => setTasks(tasks.filter(t => t.id !== task.id))}>Delete</button>
+          </li>
         ))}
       </ul>
     </div>
