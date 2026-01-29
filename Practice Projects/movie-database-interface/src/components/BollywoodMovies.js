@@ -132,19 +132,27 @@ export default function BollywoodMovie() {
     const filterAndSortMovies = () => {
         let filteredMovies = movies;
 
-        // Apply search filter
         if (searchTerm) {
             filteredMovies = filteredMovies.filter(movie =>
                 movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 movie.director.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 movie.cast.some(actor => actor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                movie.genre.toLowerCase().includes(searchTerm.toLowerCase())
+                movie.genre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                movie.year.toString().includes(searchTerm)
             )
             );
         }
+
+        if (selectedGenre !== 'All') {
+            filteredMovies = filteredMovies.filter(movie =>
+                movie.genre.split(',').map(g => g.trim().toLowerCase()).includes(selectedGenre.toLowerCase())
+            );
+        }
+
         return filteredMovies;
     };  
 
+    const genres = ['All', ...new Set(movies.map(movie => movie.genre).flatMap(g => g.split(',')).map(genre => genre.trim()))];
 
 
     return (
@@ -167,7 +175,31 @@ export default function BollywoodMovie() {
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="search-input"
                             />
+
+                            {   searchTerm &&
+                                (
+                                    <p className="search-results">
+                                        {filterAndSortMovies().length} results found for "{searchTerm}"
+                                    </p>
+                                )
+                            }
                         </div>
+
+                        <div className="filter-section">
+                            <h4>Filter by Genre:</h4>
+                            <div className="genre-buttons">
+                                {genres.map((genre) => (
+                                    <button
+                                        key={genre}
+                                        className={`genre-button ${selectedGenre === genre ? 'active' : ''}`}
+                                        onClick={() => setSelectedGenre(genre)}
+                                    >
+                                        {genre}
+                                    </button>
+                                ))}
+                            </div> 
+                        </div>
+
                        <div className="movie-grid">
                         {   filterAndSortMovies().map((movie) => (
                             <div key={movie.id} className={`movie-card ${RatingCategory(movie.rating)}`}>
