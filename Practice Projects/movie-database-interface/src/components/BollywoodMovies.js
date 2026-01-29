@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React , {useState , useMemo} from "react";
 import './BollywoodMovies.css';
 
 const BollywoodMovies = [
@@ -129,7 +129,8 @@ export default function BollywoodMovie() {
         return 'average';
     }
 
-    const filterAndSortMovies = () => {
+    const memoizedFilteredAndSortedMovies = useMemo(()=>{
+        
         let filteredMovies = movies;
 
         if (searchTerm) {
@@ -149,11 +150,27 @@ export default function BollywoodMovie() {
             );
         }
 
-        return filteredMovies;
-    };  
+        filteredMovies.sort((a, b) => {
+            if (sortBy === 'title') {
+                return a.title.localeCompare(b.title);
+            } else if (sortBy === 'rating') {
+                return b.rating - a.rating;
+            } else if (sortBy === 'year') {
+                return b.year - a.year;
+            } else if (sortBy === 'genre') {
+                return a.genre.localeCompare(b.genre);
+            }
+            return 0;
+        });
 
-    const genres = ['All', ...new Set(movies.map(movie => movie.genre).flatMap(g => g.split(',')).map(genre => genre.trim()))];
+        return filteredMovies; 
+    }, [movies, searchTerm, selectedGenre, sortBy]);
 
+    
+    const genres = useMemo(() => {
+        const genres = ['All', ...new Set(movies.map(movie => movie.genre).flatMap(g => g.split(',')).map(genre => genre.trim()))];
+        return genres;
+    }, [movies]);
 
     return (
         <div className={"bollywood-movies"}>
@@ -179,7 +196,7 @@ export default function BollywoodMovie() {
                             {   searchTerm &&
                                 (
                                     <p className="search-results">
-                                        {filterAndSortMovies().length} results found for "{searchTerm}"
+                                        {memoizedFilteredAndSortedMovies.length} results found for "{searchTerm}"
                                     </p>
                                 )
                             }
@@ -199,9 +216,28 @@ export default function BollywoodMovie() {
                                 ))}
                             </div> 
                         </div>
-
+                        <div className="sort-section">
+                            <label htmlFor="sort-select">Sort by: </label>
+                            <select id="sort-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                                <option value="title">Title (A-Z)</option>
+                                <option value="rating">Rating (High to Low)</option>
+                                <option value="year">Year (Newest First)</option>
+                                <option value="genre">Genre (A-Z)</option>
+                            </select>   
+                        </div>
+                        {
+                            (searchTerm || selectedGenre !== 'All') && (
+                                <button className="clear-filters" onClick={() => {
+                                    setSearchTerm('');
+                                    setSelectedGenre('All');
+                                }}>
+                                    Clear Filters
+                                </button>
+                            )
+                        }
                        <div className="movie-grid">
-                        {   filterAndSortMovies().map((movie) => (
+                        { memoizedFilteredAndSortedMovies.length > 0 ?
+                        (   memoizedFilteredAndSortedMovies.map((movie) => (
                             <div key={movie.id} className={`movie-card ${RatingCategory(movie.rating)}`}>
                                 <img src={movie.image} alt={movie.title} className="movie-image" />
                                 <h3 className="movie-title">{movie.title}</h3>
@@ -213,8 +249,17 @@ export default function BollywoodMovie() {
                                 <p className="movie-cast">Cast: {movie.cast.join(', ')}</p>
                             </div>
                         ))
-
-                        }
+                    ) : (
+                        <div className="empty-state">
+                        <h3>No bollywood movies found!</h3>
+                        <p>
+                            {searchTerm || selectedGenre !== 'All' ?
+                            'Try adjusting your search or filter to find what you are looking for.' :
+                            'Start searching for your favorite bollywood movies!'}
+                        </p>
+                        </div>
+                    )
+                }
                        </div>
                     </div>
                 )
