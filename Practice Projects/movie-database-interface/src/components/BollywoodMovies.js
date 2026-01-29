@@ -129,6 +129,23 @@ export default function BollywoodMovie() {
         return 'average';
     }
 
+    const filterAndSortMovies = () => {
+        let filteredMovies = movies;
+
+        // Apply search filter
+        if (searchTerm) {
+            filteredMovies = filteredMovies.filter(movie =>
+                movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                movie.director.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                movie.cast.some(actor => actor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                movie.genre.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            );
+        }
+        return filteredMovies;
+    };  
+
+
 
     return (
         <div className={"bollywood-movies"}>
@@ -142,8 +159,17 @@ export default function BollywoodMovie() {
                 ) : 
                 (
                     <div className="main-content">
+                        <div className="search-section">
+                            <input
+                                type="text"
+                                placeholder="Search by title, director, or cast..." 
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="search-input"
+                            />
+                        </div>
                        <div className="movie-grid">
-                        {   movies.map((movie) => (
+                        {   filterAndSortMovies().map((movie) => (
                             <div key={movie.id} className={`movie-card ${RatingCategory(movie.rating)}`}>
                                 <img src={movie.image} alt={movie.title} className="movie-image" />
                                 <h3 className="movie-title">{movie.title}</h3>
