@@ -119,9 +119,78 @@ export const useTaskContext = () =>{
 
 //step3: create the provider component
 export const TaskProvider = ({children})=>{
-    const value = {
-
+    const [state, dispatch] = useReducer(taskReducer , initialState);
+    
+    const addTask = (taskData)=>{
+        dispatch({type : ACTIONS.ADD_TASK , payload : taskData});
     };
+
+    const deleteTask = (id)=>{
+        dispatch({type : ACTIONS.DELETE_TASK , payload : {id}});
+    };
+
+    const toggleTask = (id)=>{
+        dispatch({type : ACTIONS.TOGGLE_TASK , payload : {id}});
+    };
+
+    const editTask = (id , updates)=>{
+        dispatch({type : ACTIONS.EDIT_TASK , payload : {id , updates}});
+    };
+
+    const setFilter = (filter)=>{
+        dispatch({type : ACTIONS.SET_FILTER , payload : filter});
+    };
+
+    const setSearchTerm = (searchTerm)=>{
+        dispatch({type : ACTIONS.SET_SEARCH_TERM , payload : searchTerm});
+    };
+
+    const undoAction = ()=>{
+        dispatch({type : ACTIONS.UNTO_ACTION});
+    };
+
+    const setLoading = (isLoading)=>{
+        dispatch({type : ACTIONS.SET_LOADING , payload : isLoading});
+    }
+
+    //Derived state compute values based on current state
+
+    const filteredTasks = state.tasks.filter(task => {
+        const matchesFilter = state.filter === "all" ||  (state.filter === "pending" && !task.completed) || (state.filter === "completed" && task.completed);
+
+        const matchesSearchTerm = task.title.toLowerCase().includes(state.searchTerm.toLowerCase()) || task.description.toLowerCase().includes(state.searchTerm.toLowerCase());
+
+        return matchesFilter && matchesSearchTerm;
+    });
+
+
+    const taskStats = {
+        total : state.tasks.length,
+        completed : state.tasks.filter(task => task.completed).length,
+        pending : state.tasks.filter(task => !task.completed).length
+    }
+
+    const value = {
+        tasks : filteredTasks.length > 0 ? filteredTasks : state.tasks,
+        filter : state.filter,
+        searchTerm : state.searchTerm,
+        isLoading : state.isLoading,
+        history : state.history,
+        taskStats,
+        canUndo : state.history.length > 0,
+
+        //actions
+        addTask,
+        deleteTask,
+        toggleTask,
+        editTask,
+        setFilter,
+        setSearchTerm,
+        undoAction,
+        setLoading
+    };
+
+
 
     return(
         <TaskContext.Provider value={value}>
