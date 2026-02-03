@@ -158,7 +158,7 @@ export const TaskProvider = ({children})=>{
     const filteredTasks = state.tasks.filter(task => {
         const matchesFilter = state.filter === "all" ||  (state.filter === "pending" && !task.completed) || (state.filter === "completed" && task.completed);
 
-        const matchesSearchTerm = task.title.toLowerCase().includes(state.searchTerm.toLowerCase()) || task.description.toLowerCase().includes(state.searchTerm.toLowerCase());
+        const matchesSearchTerm = state.searchTerm === "" || task.title.toLowerCase().includes(state.searchTerm.toLowerCase()) || task.description.toLowerCase().includes(state.searchTerm.toLowerCase());
 
         return matchesFilter && matchesSearchTerm;
     });
