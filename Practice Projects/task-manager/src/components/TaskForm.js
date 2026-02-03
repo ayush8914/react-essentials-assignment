@@ -39,7 +39,28 @@ function TaskForm(){
         setFormData({...formData , [name] : value});
     }
 
-    
+    return(
+        <form onSubmit={handleSubmit} className="task-form">
+            <h2>Add New Task</h2>
+            <div className="form-group">
+                <label htmlFor="title">Title *</label>
+                <input type="text" name="title" value={formData.title} onChange={handleChange} required placeholder="Task title..."/>
+            </div>
+            <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Task description..."></textarea>
+            </div>
+            <div className="form-group">
+                <label htmlFor="priority">Priority</label>  
+                <select name="priority" value={formData.priority} onChange={handleChange}>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+            <button type="submit" disabled={!formData.title.trim()}>Add Task</button>
+        </form>
+    )
 
 }
 
