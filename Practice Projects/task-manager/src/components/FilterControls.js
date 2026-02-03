@@ -1,7 +1,7 @@
 import { useTaskContext } from "../context/TaskContext";
 
 function FilterControls() {
-    const { filter, SearchTerm, setFilter , setSearchTerm , undoAction, canUndo } = useTaskContext();
+    const { filter, SearchTerm, setFilter , setSearchTerm , undoAction, canUndo,deleteAll } = useTaskContext();
     
 
     return(
@@ -11,7 +11,6 @@ function FilterControls() {
                 <input type="text" placeholder="Search tasks..." value={SearchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input"/>
             </div>
             <div className="filter-section">
-                <label >Filter:</label>
                 <div className="filter-buttons">
                     {['all','pending','completed'].map( filterValue =>
                     <button key={filterValue} onClick={() => setFilter(filterValue)}
@@ -25,6 +24,9 @@ function FilterControls() {
             <div className="action-section">
                 <button disabled={!canUndo} onClick={undoAction} className="undo-btn">
                     Undo
+                </button>
+                <button className="deleteall-btn" onClick={deleteAll}>
+                    Delete All
                 </button>
             </div>
         </div>

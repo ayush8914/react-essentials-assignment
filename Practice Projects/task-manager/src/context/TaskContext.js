@@ -3,30 +3,30 @@ import { createContext , useContext , useReducer } from "react";
 //Initial state - this is our application's starting point
 const initialState = {
     tasks:[
-        {
-            id:1,
-            title: "Learn React Context",
-            description : "Understand how context API works",
-            completed : false,
-            priority : "high",
-            createAt :  new Date().toISOString()
-        },
-        {
-            id:2,
-            title: "Learn React Context",
-            description : "Understand how context API works",
-            completed : false,
-            priority : "high",
-            createAt :  new Date().toISOString()
-        },
-        {
-            id:3,
-            title: "Learn React Context",
-            description : "Understand how context API works",
-            completed : false,
-            priority : "high",
-            createAt :  new Date().toISOString()
-        }
+         {
+    id: 1,
+    title: "Refactor Task Reducer",
+    description: "Clean up reducer logic and fix undo history bug",
+    completed: true,
+    priority: "high",
+    createdAt: "2026-01-20T09:15:00.000Z"
+  },
+  {
+    id: 2,
+    title: "Implement Undo Feature",
+    description: "Allow reverting last task action using state snapshots",
+    completed: false,
+    priority: "low",
+    createdAt: "2026-01-21T14:30:00.000Z"
+  },
+  {
+    id: 3,
+    title: "Add Task Search",
+    description: "Filter tasks by title and description in real time",
+    completed: false,
+    priority: "medium",
+    createdAt: "2026-01-22T08:45:00.000Z"
+  }
     ],
     filter : "all", //all ,completed, pending
     searchTerm:'',
@@ -44,7 +44,8 @@ export const ACTIONS = {
     SET_FILTER : 'SET_FILTER',
     SET_SEARCH_TERM : 'SET_SEARCH',
     UNTO_ACTION : 'UNDO_ACTION',
-    SET_LOADING : 'SET_LOADING'
+    SET_LOADING : 'SET_LOADING',
+    DELETE_ALL : 'DELETE_ALL'
 };
 
 
@@ -54,8 +55,16 @@ const taskReducer = (state , action) =>{
 
     const saveToHistory = (currentState) =>({
         ...currentState,
-        history : [...currentState.history , currentState.history.slice(0,9)] //keep only last 10 state
+         history: [
+    {
+      tasks: state.tasks,
+      filter: state.filter,
+      searchTerm: state.searchTerm,
+    },
+    ...state.history
+    ].slice(0, 10) //keep only last 10 state
     });
+
 
     switch(action.type){
         case ACTIONS.ADD_TASK : 
@@ -65,7 +74,7 @@ const taskReducer = (state , action) =>{
                 description : action.payload.description,
                 completed : false,
                 priority : action.payload.priority,
-                createAt : new Date().toISOString()
+                createdAt : new Date().toISOString()
             };
             return saveToHistory({...state , tasks : [...state.tasks , newTask]});
         
@@ -90,11 +99,14 @@ const taskReducer = (state , action) =>{
                 const [previousState, ...rest] = state.history;
                 return {...previousState , history : rest};
             }
-
+            
             return state;
 
         case ACTIONS.SET_LOADING :
             return {...state , isLoading : action.payload};
+
+        case ACTIONS.DELETE_ALL :
+            return saveToHistory({...state , tasks : []});
 
         default :
             throw new Error(`Unknown action type : ${action.type}`);
@@ -132,6 +144,10 @@ export const TaskProvider = ({children})=>{
     const toggleTask = (id)=>{
         dispatch({type : ACTIONS.TOGGLE_TASK , payload : {id}});
     };
+
+    const deleteAll = ()=>{
+        dispatch({type : ACTIONS.DELETE_ALL});
+    }
 
     const editTask = (id , updates)=>{
         dispatch({type : ACTIONS.EDIT_TASK , payload : {id , updates}});
@@ -171,7 +187,7 @@ export const TaskProvider = ({children})=>{
     }
 
     const value = {
-        tasks : filteredTasks.length > 0 ? filteredTasks : state.tasks,
+        tasks : filteredTasks,
         filter : state.filter,
         searchTerm : state.searchTerm,
         isLoading : state.isLoading,
@@ -187,7 +203,8 @@ export const TaskProvider = ({children})=>{
         setFilter,
         setSearchTerm,
         undoAction,
-        setLoading
+        setLoading,
+        deleteAll
     };
 
 

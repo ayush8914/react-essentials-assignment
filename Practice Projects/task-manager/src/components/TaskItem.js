@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTaskContext } from "../context/TaskContext";
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 
 
@@ -31,13 +32,19 @@ function TaskItem({task}){
     if(isEditing){
         return(
             <div className="task-item editing">
-                <input type="text" value={editData.title} onChange={(e) => setEditData({...editData , title : e.target.value})} className="task-title" placeholder="Task title..."/>
-                <textarea value={editData.description} onChange={(e) => setEditData({...editData , description : e.target.value})} className="task-description" placeholder="Task description..."/>
-                <select value={editData.priority} onChange={(e) => setEditData({...editData , priority : e.target.value})} className="task-priority">
-                    <option value="high" style={{color : getPriorityColor("high")}}>High</option>
-                    <option value="medium" style={{color : getPriorityColor("medium")}}>Medium</option>
-                    <option value="low" style={{color : getPriorityColor("low")}}>Low</option>
-                </select>
+                <div className="form-group">
+                    <input type="text" value={editData.title} onChange={(e) => setEditData({...editData , title : e.target.value})} className="task-title" placeholder="Task title..."/>
+                </div>
+                <div className="form-group">
+                    <textarea value={editData.description} onChange={(e) => setEditData({...editData , description : e.target.value})} className="task-description" placeholder="Task description..."/>
+                </div>
+                <div className="form-group">
+                    <select value={editData.priority} onChange={(e) => setEditData({...editData , priority : e.target.value})} className="task-priority">
+                        <option value="high" style={{color : getPriorityColor("high")}}>High</option>
+                        <option value="medium" style={{color : getPriorityColor("medium")}}>Medium</option>
+                        <option value="low" style={{color : getPriorityColor("low")}}>Low</option>
+                    </select>
+                </div>
                 <div className="edit-actions">
                     <button className="save" onClick={handleEdit}>Save</button>
                     <button className="cancel" onClick={handleCancel}>Cancel</button>
@@ -55,16 +62,14 @@ function TaskItem({task}){
                 </div>
                   {task.description &&   <p className="task-description">{task.description}</p> }
                 <div className="task-meta">
-                    <small>Created : {new Date(task.createdAt).toLocaleDateString()}</small>
+                    <small>Created:{" "}{task.createdAt ? new Date(task.createdAt).toLocaleDateString() : "—"} </small>
                 </div>
 
                 <div className="task-actions">
                     <button onClick={()=> toggleTask(task.id)} className={`toggle-btn ${task.completed ? "completed" : ""}`}>{task.completed ? "completed" : "Pending"}</button>
-                    <button>
-                        <i className="fa fa-edit" onClick={() => setIsEditing(true)}></i>
+                    <button onClick={() => setIsEditing(true)}><FaEdit />
                     </button>
-                    <button>
-                        <i className="fa fa-trash" onClick={() => deleteTask(task.id)}></i>
+                    <button onClick={() => deleteTask(task.id)}><FaTrash />
                     </button>
                     
                 </div>

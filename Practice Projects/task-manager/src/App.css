@@ -1,38 +1,444 @@
-.App {
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: whitesmoke;
+  color: black;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.App{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.app-header{
+  text-align: center;
+  margin-bottom: 2rem;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.app-header h1{
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.app-header p {
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+.app-main{
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap : 2rem;
+  align-items: start;
+}
+
+@media (max-width:768px) {
+    .app-main{
+      grid-template-columns: 1fr;
+      gap:1rem;
+    }
+
+    .app-header h1{
+      font-size: 2rem;
+    }
+}
+
+.sidebar{
+  background-color: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  position: sticky;
+  top: 20px;
+}
+
+
+.task-form h2{
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.form-group{
+  margin-bottom: 1.5rem;
+}
+
+.form-group label{
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3 ease;
+  font-family: inherit;
+  background: #fff;
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  outline: none;
+}
+
+
+.form-group textarea{
+  resize: vertical;
+  min-height: 80px;
+}
+
+.task-form button[type="submit"]{
+  width: 100%;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: #fff;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  text-transform: uppercase;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.task-form button[type="submit"]:hover:not(:disabled){
+ transform: translateY(-2px);
+ box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+
+.task-form button[type="submit"]:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.content{
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.filter-controls{
+  display: flex;
+  flex-wrap: wrap;
+  gap:1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f8f0fa;
+  border-radius: 16px;
+  border: 1px solid #e9ecef;
+}
+
+.search-section{
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-input{
+  width: 100%;
+  padding: 10px 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 25px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.filter-buttons{
+  display: flex;
+  gap:0.5rem;
+  background: #fff;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid #e1e8ed;
+}
+
+.filter-buttons button{
+  padding: 8px 16px;
+  border: 1px solid black;
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #666;
+  background: transparent;
+  white-space: nowarp;
+}
+
+
+.filter-buttons button.active{
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: #fff;
+  border-color: #667eea;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.filter-buttons button:hover:not(.active){
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: #fff;
+  border-color: #667eea;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.task-stats{
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.6rem;
+  padding: 1rem;
+  background: #f8f0fa;
+  border-radius: 16px;
+  font-weight: 600;
+}
+
+
+.task-stats span{
+  padding: 0.5rem 1rem;
+  background: rgba(255,255,255,0.9);
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.task-item{
+  background: whitesmoke;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #e1ecef;
+  transition: all 0.3s ease;
+  position: relative;
+  animation: slidIn 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.task-item:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+
+.task-item.completed{
+  opacity: 0.6;
+  background: #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.task-item.completed h3{
+  text-decoration: line-through;
+  color: #666;
+}
+
+
+.task-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.task-header h3{
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 600;
+  margin: 0;
+  flex:1;
+  margin-right: 1rem;
+}
+
+.priority-badge{
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  min-width: 70px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.task-meta{
+  margin: 1rem 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.task-meta small{
+  color : #666;
+  font-size: 13px;
+}
+
+
+@keyframes slidIn{
+  from{
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to{
+      opacity: 1;
+      transform: translateY(0);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+.task-actions{
   display: flex;
-  flex-direction: column;
+  gap:0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.task-actions button{
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #666;
+  background: transparent;
+  color: #666;
+  font-size: 0.95rem;
+  cursor: pointer;
+  outline: none;
+  font-size: 12px;
+  transition: background 0.3s ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.task-item.editing{
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.task-actions button:hover{
+  background: #f8f0fa;
+  color: #333;
+  border-color: #333;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.editing .task-actions button{
+  background: #f8f0fa;
+  color: #333;
+  border-color: #333;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.edit-actions{
+  display: flex;
+  gap:0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.edit-actions button{
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #666;
+  background: transparent;
+  color: #666;
+  font-size: 0.95rem;
+  cursor: pointer;
+  outline: none;
+  font-size: 12px;
+  transition: background 0.3s ease;
+}
+
+.edit-actions button:hover{
+  background: #f8f0fa;
+  color: #333;
+  border-color: #333;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.edit-actions .save{
+  justify-content: flex-end;
+  gap:0.5rem;
+  color: #fff;
+  flex-wrap: wrap;
+  align-items: center;
+  background: linear-gradient(to right, #667eea, #764ba2);
+}
+
+.edit-actions .cancel:hover{
+  justify-content: flex-end;
+  gap:0.5rem;
+  color: #fff;
+  flex-wrap: wrap;
+  align-items: center;
+  background: #ff4757;
+}
+
+
+.filter-controls .action-section{
+  flex: 1;
+  text-align: right;
+}
+
+
+.filter-controls .action-section button{
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background: transparent;
+  color: #666;
+  border: 1px solid #666;
+  gap: 0.5rem;
+  margin-right: 10px;
+}
+
+.filter-controls .action-section button:hover{
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border-color: #333;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
