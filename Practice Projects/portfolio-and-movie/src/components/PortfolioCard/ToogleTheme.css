@@ -1,0 +1,31 @@
+.Toogle-thm{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.Toogle-thm button{
+    border-radius: 14px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    gap:6px;
+    display: flex;
+    padding: 10px 20px;
+}
+
+.Toogle-thm button:hover{
+    background-color: #667eea;
+    color: #fff;
+}
+
+.btn-dark{
+    color: #fff;
+    background-color: #4E5666;
+}
+
+.btn-light{
+    background-color: #E6EEF8 ;
+    color: #4E5666;
+}

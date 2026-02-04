@@ -1,0 +1,27 @@
+.avatar-container img{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+
+}
+
+.avatar-container{
+    display: flex;
+    justify-content: flex-start;
+    padding: 2px 8px;
+    position: relative;
+    align-items: center;
+}
+
+.avatar-boarder{
+    position: absolute;
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    border: 2px solid #667eea;
+    margin-left: -4px;
+    box-sizing: border-box;
+}
+
+

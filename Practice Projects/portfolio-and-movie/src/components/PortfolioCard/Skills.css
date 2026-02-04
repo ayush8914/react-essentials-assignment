@@ -1,0 +1,39 @@
+.skills-container{
+
+}
+
+.title{
+    font-size: 14px;
+    font-weight: 600;
+    color:#A3A8AF;
+    margin: 0 0 8px 0;
+}
+
+.skills{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 2.5rem;
+}
+
+.skill-badge{
+    background-color: #E6EEF8;
+    color: #4E5666;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+
+.skill-badge.light{
+    background-color: #E6EEF8;
+    color: #4E5666;
+}
+
+.skill-badge.dark{
+    background-color: #4E5666;
+    color: #E6EEF8;
+}
+
