@@ -1,0 +1,110 @@
+.footer-container {
+  width: 100%;
+  padding: 0px 0px;
+  margin: 0px;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.theme-toggle{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.theme-toggle button{
+  padding: 10px 16px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  gap:6px;
+  display: flex;
+  background-color: transparent;
+}
+
+.btn-dark{
+    color: #fff;
+}
+
+.btn-light{
+    color: #111;
+}
+
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #888;
+}
+
+.tabs svg {
+  cursor: pointer;
+}
+
+.page {
+  font-weight: 500;
+}
+
+
+.likes {
+  display: flex;
+  align-items: center;   
+  gap: 6px;              
+  color: #111;
+}
+
+
+.likes.light{
+    color: #111;
+}
+
+.likes.dark{
+    color: #fff;
+}
+
+
+.likes button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: transparent; 
+  color: inherit;
+
+  cursor: pointer;
+  padding: 1px;
+  font-weight: 600;
+}
+
+.likes-count{
+    font-weight: 500;
+}
+.red-heart{
+    color: red;
+}
+
+
+.contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.contact-btn svg {
+  font-size: 16px;
+}
