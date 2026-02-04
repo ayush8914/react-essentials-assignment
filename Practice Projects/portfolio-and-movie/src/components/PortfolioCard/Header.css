@@ -1,0 +1,19 @@
+.header-container{
+    display: flex;
+    gap:12px;
+    padding: 8px 8px;
+    position: relative;
+    align-items: center;
+}
+
+.name{
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.role{
+    font-size: 17px;
+    font-weight: 500;
+    color:#B3B7BF;
+}
