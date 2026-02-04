@@ -6,7 +6,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null); 
-
+  const [secondsOnPage, setSecondsOnPage] = useState(0);
 
   const fetchUser = async () => {
         try{
@@ -25,14 +25,35 @@ export default function App() {
         } 
 
   }
-
+  
+  
   useEffect(() => {
+    console.log("Fetching user data...");
     fetchUser();
+  }, []);
+
+  useEffect(()=>{
+    console.log("Updating document title...");
+    if(user){
+      document.title = `Profile: ${user.name} | User Dashboard`  ;
+    }
+    else{
+      document.title = "Loading... | User Dashboard";
+    }
+  },[user]);
+  
+  useEffect(() => {
+    console.log(`Seconds on page: ${secondsOnPage}`);
+    const interval = setInterval(() => {
+      setSecondsOnPage(secondsOnPage =>secondsOnPage + 1);
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="App">
       <h1>User Profile Dashboard</h1>
+      <p style={{textAlign:"center",color:"#666",fontStyle:'italic',marginBottom:"20px"}}>Time on page: {secondsOnPage}</p>
       {error && (
         <div style={{color:"red",padding:"20px",border:"1px solid red"}}>
           <h2>Error!</h2>
