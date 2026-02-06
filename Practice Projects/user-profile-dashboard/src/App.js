@@ -23,9 +23,8 @@ export default function App() {
           setError(err.message);
           setLoading(false);
         } 
-
   }
-  
+
   
   useEffect(() => {
     console.log("Fetching user data...");
@@ -41,7 +40,8 @@ export default function App() {
       document.title = "Loading... | User Dashboard";
     }
   },[user]);
-  
+
+
   useEffect(() => {
     console.log(`Seconds on page: ${secondsOnPage}`);
     const interval = setInterval(() => {
@@ -50,6 +50,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
+ 
   return (
     <div className="App">
       <h1>User Profile Dashboard</h1>
