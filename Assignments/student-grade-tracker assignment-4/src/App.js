@@ -32,6 +32,28 @@ class App extends React.Component {
       ]
     }
   }
+
+  renderStudentList(){
+    if(this.state.students.length ===0){
+      return <div className='no-students'>
+        <p>No Students added yet.Add your first student below!</p>
+        </div>
+    }
+
+    return this.state.students.map((student) => {
+      <div key={student.id} className={`student-card ${student.passed ? 'passed' : 'failed'}`}>
+          <div className='student-info'>
+              <h3>{student.name}</h3>
+              <p><strong>Subject:</strong>{student.subject}</p>
+              <p><strong>Grade:</strong>{student.grade}%</p>
+          </div>
+          <div className='student-status'>
+                <span className={`status ${student.passed ? 'passed' : 'failed'}`}>{student.passed ? 'PASSED' : 'FAILED'}</span>
+          </div>
+      </div>
+    })
+  }
+
  render(){
   return(
    <div className='app'>
