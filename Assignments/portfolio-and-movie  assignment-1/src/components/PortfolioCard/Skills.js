@@ -7,7 +7,7 @@ function Skills(props){
             <h3 className='title'>Skills</h3>
             <div className='skills'>
                 {props.skills.map((skill) => (
-                    <span className={`skill-badge ${props.isDark ? "dark" : "light"}`}>{skill}</span>
+                    <span key={skill} className={`skill-badge ${props.isDark ? "dark" : "light"}`}>{skill}</span>
                 ))}
             </div>
         </div>

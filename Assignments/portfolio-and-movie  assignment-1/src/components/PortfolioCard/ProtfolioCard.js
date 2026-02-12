@@ -23,6 +23,7 @@ function PortfolioCard(){
     const prevPage = () => setPage( page === 1 ? 4 : page - 1);
 
     return(
+        <>
         <div className='PortfolioCard'>
                 <div className='Toogle-button'>
                     <ToogleTheme isDark={isDark} toggleDark={toggleDark}/>
@@ -45,6 +46,7 @@ function PortfolioCard(){
             </div>
             </div>
         </div>
+        </>
     );
 }
 
