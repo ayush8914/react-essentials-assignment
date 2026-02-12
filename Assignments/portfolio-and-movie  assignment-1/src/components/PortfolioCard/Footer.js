@@ -29,9 +29,8 @@ function Footer(props) {
 
         <div className={`likes ${props.isDark ? "dark" : "light"}`}>
           <button onClick={props.toggleLike} className={props.isLiked ? "red-heart" : ""}>
-            <FaHeart style={{ color: props.isLiked ? "red" : "" }}/>
+            <FaHeart style={{ color: props.isLiked ? "red" : "" }}/>&nbsp;<span className="likes-count">{props.likes}</span>
             </button>
-          <span className="likes-count">{props.likes}</span>
         </div>
 
         <button

@@ -1,11 +1,14 @@
 body {
-  margin: 0; /* removes default browser margin */
+  margin: 0;
   background-color: whitesmoke;
 }
 
 .App {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh; /* safer than height */
+
+  min-height: 100vh; 
+}
+
+
+* {
+    font-family: Inter, sans-serif; 
 }
