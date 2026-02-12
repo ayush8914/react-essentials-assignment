@@ -7,6 +7,7 @@ const movies = [
       genre: "Sci-Fi",
       rating: 7.8,
       maintag: "Adventure",
+      category : "Action",
       tags: ["Aliens", "Space", "Future"],
       isFavorite: false,
     },
@@ -263,7 +264,7 @@ const movies = [
       rating: 8.6,
       maintag: "Adventure",
       tags: ["Space", "Time", "Emotion"],
-      isFavorite: true,
+      isFavorite: false,
     },
     {
       id: 26,
