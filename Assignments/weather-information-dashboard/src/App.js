@@ -12,9 +12,11 @@ function App() {
   const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 
-  useEffect(() => {
-    const fetchWeather = async (cityName) => {
-    if (!cityName.trim()) return;
+useEffect(() => {
+  const controller = new AbortController();
+
+  const fetchWeather = async (cityName) => {
+    if (!cityName?.trim()) return;
 
     setLoading(true);
     setError(null);
@@ -22,18 +24,19 @@ function App() {
 
     try {
       const response = await fetch(
-        `${BASE_URL}?q=${cityName}&appid=${API_KEY}&units=metric`
+        `${BASE_URL}?q=${cityName}&appid=${API_KEY}&units=metric`,
+        { signal: controller.signal }
       );
 
       if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error('City not found');
-        }
-        throw new Error('Failed to fetch weather data');
+        if (response.status === 404) throw new Error("City not found");
+        throw new Error("Failed to fetch weather data");
       }
 
       const data = await response.json();
-      setWeather({
+      // Only set state if not aborted
+      if (!controller.signal.aborted) {
+        setWeather({
         temp: Math.round(data.main.temp),
         feels_like: Math.round(data.main.feels_like),
         humidity: data.main.humidity,
@@ -44,21 +47,24 @@ function App() {
         cityName: data.name,
         country: data.sys.country
       });
+      }
     } catch (err) {
-      setError(err.message);
+      if (err.name !== "AbortError") {
+        setError(err.message);
+      }
     } finally {
-      setLoading(false);
+      if (!controller.signal.aborted) {
+        setLoading(false);
+      }
     }
   };
-  
-    fetchWeather(city);
 
-    return () => {
-      setLoading(false);
-      setError(null);
-      setWeather(null);
-    }
-  }, [city]); 
+  fetchWeather(city);
+
+  return () => {
+    controller.abort(); // ← cancels previous request when city changes or unmount
+  };
+}, [city]);
 
 
 
