@@ -11,7 +11,9 @@ function App() {
   const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
   const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
-  const fetchWeather = async (cityName) => {
+
+  useEffect(() => {
+    const fetchWeather = async (cityName) => {
     if (!cityName.trim()) return;
 
     setLoading(true);
@@ -48,8 +50,7 @@ function App() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
+  
     fetchWeather(city);
 
     return () => {
