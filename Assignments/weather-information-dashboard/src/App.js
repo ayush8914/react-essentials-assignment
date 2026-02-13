@@ -64,7 +64,7 @@ useEffect(() => {
   return () => {
     controller.abort();
   };
-}, [city]); // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [city, API_KEY]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
 
