@@ -31,7 +31,6 @@ function App() {
       }
 
       const data = await response.json();
-
       setWeather({
         temp: Math.round(data.main.temp),
         feels_like: Math.round(data.main.feels_like),
@@ -52,6 +51,12 @@ function App() {
 
   useEffect(() => {
     fetchWeather(city);
+
+    return () => {
+      setLoading(false);
+      setError(null);
+      setWeather(null);
+    }
   }, [city]); 
 
 
