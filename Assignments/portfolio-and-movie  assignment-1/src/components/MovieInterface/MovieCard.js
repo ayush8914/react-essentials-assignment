@@ -44,7 +44,7 @@ function MovieCard(props){
             <div className='search-section'>
                 <div className='search-box'>
                     <span className='lni'><FaSearch /></span>
-                    <input className='search-input' onChange={(e) => setSearchQuery(e.target.value)} value={searchQuery} type="text" placeholder="Search Movies (e.g. 'The Matrix')" className='search-input'/>
+                    <input className='search-input' onChange={(e) => setSearchQuery(e.target.value)} value={searchQuery} type="text" placeholder="Search Movies (e.g. 'The Matrix')"/>
                     <span className='lni lni-xmark' onClick={handleReset} > <FaTimes /></span>
                 </div>
                 <div className='reset-button' onClick={handleReset}>
