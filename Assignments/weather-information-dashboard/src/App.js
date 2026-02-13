@@ -62,9 +62,9 @@ useEffect(() => {
   fetchWeather(city);
 
   return () => {
-    controller.abort(); // ← cancels previous request when city changes or unmount
+    controller.abort();
   };
-}, [city]);
+}, [city]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
 
