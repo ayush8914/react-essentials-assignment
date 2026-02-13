@@ -1,157 +1,156 @@
-import './App.css'
-import React from 'react';
+import React, { Component } from 'react';
+import AddStudentForm from './components/AddStudentForm';
+import StudentList from './components/StudentList';
+import './App.css';
 
-
-class App extends React.Component {
-
-  constructor(props){
+class App extends Component {
+  constructor(props) {
     super(props);
     this.state = {
-      students : [
-        {
-          id:1,
-          name : "John Doe",
-          subject : "Maths",
-          grade: 80,
-          passed : true
-        },
-        {
-          id:2,
-          name : "Alesha Doe",
-          subject : "English",
-          grade: 90,
-          passed : true
-        },
-        {
-          id:3,
-          name : "Bob Smith",
-          subject : "Maths",
-          grade: 70,
-          passed : false
-        }
-      ],
-      newStudet : {
-        name : "",
-        subject : "",
-        grade: ""
-      }
+      students: [],
+      filter: 'all',       // all | passed | failed
+      sortBy: 'none',      // none | grade-asc | grade-desc
+      lastAction: null     // for componentDidUpdate demo
+    };
+  }
+
+  // Lifecycle: Load sample data on mount
+  componentDidMount() {
+    console.log('App componentDidMount - loading initial data');
+    const sampleStudents = [
+      { id: 1, name: 'Aarav Patel', grade: 85, passed: true },
+      { id: 2, name: 'Priya Sharma', grade: 42, passed: false },
+      { id: 3, name: 'Rahul Desai',  grade: 91, passed: true },
+      { id: 4, name: 'Neha Singh',   grade: 68, passed: true }
+    ];
+    this.setState({ students: sampleStudents });
+  }
+
+  // Lifecycle: Demo reacting to state changes
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.students !== this.state.students) {
+      console.log('Students list changed → total:', this.state.students.length);
+      this.setState({ lastAction: 'Students updated' });
     }
   }
 
-  handleInputChange = (event)=>{
-    this.setState({
-      newStudet : {
-        ...this.state.newStudet,
-        [event.target.name] : event.target.value
-      }
-    });
+  // Lifecycle: Cleanup (rarely needed here, but shown for completeness)
+  componentWillUnmount() {
+    console.log('App componentWillUnmount - cleaning up...');
+  }
+
+  addStudent = (newStudent) => {
+    this.setState(prev => ({
+      students: [
+        ...prev.students,
+        {
+          id: Date.now(), // simple unique id
+          name: newStudent.name.trim(),
+          grade: Number(newStudent.grade),
+          passed: Number(newStudent.grade) >= 50
+        }
+      ],
+      lastAction: 'Student added'
+    }));
   };
 
-
-  handleAddSubmit = (event) => {
-    event.preventDefault();
-
-    if(!this.state.newStudet.name.trim() || !this.state.newStudet.subject.trim() || !this.state.newStudet.grade.trim()){
-      alert("Please fill in all fields!");
+  updateGrade = (id, newGrade) => {
+    const gradeNum = Number(newGrade);
+    if (isNaN(gradeNum) || gradeNum < 0 || gradeNum > 100) {
+      alert('Grade must be between 0 and 100');
       return;
     }
 
+    this.setState(prev => ({
+      students: prev.students.map(student =>
+        student.id === id
+          ? { ...student, grade: gradeNum, passed: gradeNum >= 50 }
+          : student
+      ),
+      lastAction: 'Grade updated'
+    }));
+  };
 
-    if(isNaN(this.state.newStudet.grade) || this.state.newStudet.grade < 0 || this.state.newStudet.grade > 100){
-      alert("Grade must be a number between 0 and 100!");
-      return;
+  deleteStudent = (id) => {
+    if (window.confirm('Delete this student?')) {
+      this.setState(prev => ({
+        students: prev.students.filter(s => s.id !== id),
+        lastAction: 'Student deleted'
+      }));
+    }
+  };
+
+  setFilter = (filter) => {
+    this.setState({ filter });
+  };
+
+  setSort = (sortBy) => {
+    this.setState({ sortBy });
+  };
+
+  getFilteredAndSortedStudents() {
+    let list = [...this.state.students];
+
+    // Filter
+    if (this.state.filter === 'passed') {
+      list = list.filter(s => s.passed);
+    } else if (this.state.filter === 'failed') {
+      list = list.filter(s => !s.passed);
     }
 
-    this.setState({
-      students: [
-        ...this.state.students,
-        {
-          id: Date.now(),
-          name : this.state.newStudet.name.trim(),
-          subject : this.state.newStudet.subject.trim(),
-          grade: this.state.newStudet.grade,
-          passed : this.state.newStudet.grade >= 60 ? true : false
-        }
-      ],
-      newStudet : {
-        name : "",
-        subject : "",
-        grade: ""
-      }
-    })
+    // Sort
+    if (this.state.sortBy === 'grade-asc') {
+      list.sort((a, b) => a.grade - b.grade);
+    } else if (this.state.sortBy === 'grade-desc') {
+      list.sort((a, b) => b.grade - a.grade);
+    }
+
+    return list;
   }
 
-  handleDelete = (id) => {
-    if(window.confirm("Are you sure you want to delete this student?")){
-      this.setState({
-        students : this.state.students.filter((student) => student.id !== id)
-      })
-    }
-  }
+  render() {
+    const displayedStudents = this.getFilteredAndSortedStudents();
 
-  renderStudentList(){
-    if(this.state.students.length ===0){
-      return (<div className='no-students'>
-        <p>No Students added yet.Add your first student below!</p>
-        </div>);
-    }
+    return (
+      <div className="app">
+        <h1>Student Grade Tracker</h1>
 
-    return this.state.students.map((student) => {
-      return(<div key={student.id} className={`student-card ${student.passed ? 'passed' : 'failed'}`}>
-          <div className='student-info'>
-              <h3>{student.name}</h3>
-              <p><strong>Subject:</strong>{student.subject}</p>
-              <p><strong>Grade:</strong>{student.grade}%</p>
+        <div className="controls">
+          <AddStudentForm onAdd={this.addStudent} />
+
+          <div className="filter-sort">
+            <label>Filter: </label>
+            <select value={this.state.filter} onChange={e => this.setFilter(e.target.value)}>
+              <option value="all">All</option>
+              <option value="passed">Passed</option>
+              <option value="failed">Failed</option>
+            </select>
+
+            <label> Sort: </label>
+            <select value={this.state.sortBy} onChange={e => this.setSort(e.target.value)}>
+              <option value="none">None</option>
+              <option value="grade-asc">Grade ↑</option>
+              <option value="grade-desc">Grade ↓</option>
+            </select>
           </div>
-          <div className='student-status'>
-                <span className={`status ${student.passed ? 'passed' : 'failed'}`}>{student.passed ? 'PASSED' : 'FAILED'}</span>
-          </div>
-          <button onClick={() => this.handleDelete(student.id)} className="delete-btn">Delete</button>
-      </div>)
-    })
-  }
-
- render(){
-  return(
-   <div className='app'>
-    <header className='app-header'>
-      <h1>Student Grade Tracker</h1>
-      <p>Class Component Design</p>
-    </header>
-    <main className='app-main'>
-      <section className='students-section'>
-        <h2>Student List ({this.state.students.length})</h2>
-        <div className='students-grid'>
-        {this.renderStudentList()}
         </div>
-      </section>
-        <section className='add-student-section'>
-            <h2>Add New Student</h2>
-            <form onSubmit={this.handleAddSubmit} className="add-student-form">
-              <div className="form-group">
-              <input type="text" name="name" placeholder="Name" value={this.state.newStudet.name} onChange={this.handleInputChange} />
-              </div>
-              <div className="form-group">
-                <select name="subject" value={this.state.newStudet.subject} onChange={this.handleInputChange}>
-                  <option value="">Select Subject</option>
-                  <option value="Maths">Maths</option>
-                  <option value="English">English</option>
-                  <option value="Science">Science</option>
-                  <option value="History">History</option>
-                  <option value="Geography">Geography</option>
-                  <option value="Computer Science">Computer Science</option>  
-                </select>
-              </div>
-              <div className="form-group">
-              <input type="number" name="grade" placeholder="Grade" value={this.state.newStudet.grade} onChange={this.handleInputChange} />
-              </div>
-              <button type="submit">Add Student</button>
-            </form>
-        </section>
-    </main>
-   </div>
-  )
- }
+
+        {this.state.lastAction && (
+          <p className="status">Last action: {this.state.lastAction}</p>
+        )}
+
+        <StudentList
+          students={displayedStudents}
+          onUpdateGrade={this.updateGrade}
+          onDelete={this.deleteStudent}
+        />
+
+        <p className="summary">
+          Total students: {this.state.students.length} | Showing: {displayedStudents.length}
+        </p>
+      </div>
+    );
+  }
 }
 
-export default App
+export default App;
