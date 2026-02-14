@@ -1,38 +1,206 @@
-.App {
+.App{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+
+.app-header{
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+.loading, .error{
+  text-align: center;
+  padding: 40px;
+  margin: 20px 0;
+  border-radius: 8px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.loading{
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.error{
+  background: #ffebee;
+  color: #6c2828;
+}
+
+.error button{
+  background: #6c2828;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+
+.post-container h2{
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.posts-grid{
+  display: grid;
+  grid-template-columns: repeat(auto,minmax(300px, 1fr));
+  margin-top: 20px;
+}
+
+.post-card{
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.post-card h3{
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.post-card p{
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.post-card small{
+  color: #999;
+  font-size: 0.9rem; 
+}
+
+.add-post-section{
+  margin: 30px 0;
+  text-align: center;
+}
+
+.toggle-form-button{
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  padding: 12px 24px;
+  color:#fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.toggle-form-button:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+
+.post-form{
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 30px;
+  margin: 10px auto;
+  max-width: 600px;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.post-form h3{
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+
+.form-group{
+  margin-bottom: 20px;
+}
+
+.form-group label{
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: bold;
+}
+
+.form-group input, .form-group textarea{
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  letter-spacing: 1px;
+  font-family: 'Arial', sans-serif;
+}
+
+
+.form-group input:focus, .form-group textarea:focus{
+  border-color: #667eea;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+
+.form-actions{
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.submit-btn{
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  border: none;
+  padding: 12px 24px;
+  color:#fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.submit-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.submit-btn:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-btn{
+  background: #f44336;
+  border: none;
+  padding: 12px 24px;
+  color:#fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cancel-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
