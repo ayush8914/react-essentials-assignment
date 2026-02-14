@@ -13,7 +13,9 @@ function App(){
   const [submitting, setSubmitting] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
   const [editForm, setEditForm] = useState({title: '', body: ''});
-  
+  const [updating,setUpdating] = useState(false);
+     
+
 
   const fetchPosts =async () => {
     try{
@@ -110,6 +112,64 @@ function App(){
       }
   }
 
+  const updatePost  = async (postID, updatedPost) => {
+    try{
+        setUpdating(true);
+        setError(null);
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/1`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id : postID,
+            ...updatedPost,
+            userId:1
+          }),
+        });
+
+        if(!response.ok){
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const updatedPostData = await response.json();
+        setPosts(prevPosts => prevPosts.map(post => post.id === postID ? {...post, ...updatedPostData} : post));
+        setUpdating(false);
+        setEditingPost(null);
+        setEditForm({title: '', body: ''});
+        console.log('Post updated successfully:', updatedPostData);
+    }
+    catch(err){
+      setError(`Failed to update Post: ${err.message}`);
+      console.error('Error updating post:', err);
+    }
+    finally{
+      setUpdating(false);
+    }
+  }
+
+  const startEditing = (post) => {
+    setEditingPost(post.id);
+    setEditForm({title: post.title, body: post.body});
+  }
+
+  const cancelEditing = () => {
+    setEditingPost(null);
+    setEditForm({title: '', body: ''});
+  }
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    if(!editForm.title.trim()|| !editForm.body.trim()){
+      setError('Please fill in both title and body for the post.');
+      return;
+    }
+    updatePost(editingPost, editForm);
+  }
+
+
+
+
   return(
     <div className='App'>
         <div className='app-header'>
@@ -186,21 +246,46 @@ function App(){
                 <div className='post-grid'>
                 {posts.map((post) => (
                     <div key={post.id} className='post-card'>
+                      { editingPost === post.id ? (
+                        <div className='edit-form'>
+                          <input type='text' value={editForm.title}
+                            disabled={updating}
+                            className='edit-input'
+                            onChange={(e) => setEditForm(prev => ({...prev,title: e.target.value}))}
+                            /> 
+                          <textarea value={editForm.body}
+                          onChange={(e) => setEditForm(prev => ({...prev,body: e.target.value}))}   
+                          className='edit-textarea' disabled={updating} rows="4" />
+                          <div className='edit-actions'>
+                            <button className='save-btn' onClick={handleEditSubmit} disabled={updating || !editForm.title.trim() || !editForm.body.trim()}>
+                              {updating ? 'Saving...' : 'Save'}
+                            </button>
+                            <button className='cancel-edit-btn'
+                            onClick={cancelEditing}
+                            disabled={updating}>
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : 
+                      <>
                       <div className='post-header'>
                           <h3>{post.title}</h3>
                           <div className='post-actions'>
                             <button className='delete-btn' title='Delete this post' onClick={() => handleDelete(post.id)}>Delete</button>
+                            <button className='edit-btn' title='Edit this post' onClick={() => startEditing(post)}>Edit</button>
                           </div>
                       </div>
                       <p>{post.body}</p>
-                      <small>Post ID: {post.id} | User ID: {post.userId}</small>
+                        <small>Post ID: {post.id} | User ID: {post.userId}</small>
+                      </>
+                    }
                     </div>  
                 ))}
                 </div>
               )}
           </div>
         )}
-
     </div>
   );
 }
