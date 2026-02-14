@@ -49,7 +49,7 @@ function App(){
         } 
 
         const createdPost = await response.json();
-        setPosts(prevPosts => [createdPost,...prevPosts]);
+        setPosts(prevPosts => [{...createdPost, id: Date.now()},...prevPosts]);
         setNewPost({title: '', body: '',userId:1});
         setShowForm(false);
     }
@@ -80,6 +80,31 @@ function App(){
 
   const handleInputChange = (e) => {
     setNewPost(prev => ({...prev, [e.target.name]: e.target.value}));
+  }
+
+  const deletePost =async (id)=>{
+    try{
+      setError(null);
+      const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        method: 'DELETE',
+      });
+
+      if(!response.ok){
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      setPosts(prevPosts => prevPosts.filter(post => post.id !== id));
+    }
+    catch(err){
+      setError(`Failed to delete Post: ${err.message}`);
+      console.error('Error deleting post:', err);
+    }
+  } 
+
+  const handleDelete = (id)=>{
+      if(window.confirm('Are you sure you want to delete this post?')){
+        deletePost(id);
+      }
   }
 
   return(
@@ -158,7 +183,12 @@ function App(){
                 <div className='post-grid'>
                 {posts.map((post) => (
                     <div key={post.id} className='post-card'>
-                      <h3>{post.title}</h3>
+                      <div className='post-header'>
+                          <h3>{post.title}</h3>
+                          <div className='post-actions'>
+                            <button className='delete-btn' title='Delete this post' onClick={() => handleDelete(post.id)}>Delete</button>
+                          </div>
+                      </div>
                       <p>{post.body}</p>
                       <small>Post ID: {post.id} | User ID: {post.userId}</small>
                     </div>  
