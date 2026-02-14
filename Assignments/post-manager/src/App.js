@@ -11,6 +11,9 @@ function App(){
   const [showForm, setShowForm] = useState(false);
   const [newPost, setNewPost] = useState({title: '', body: '',userId:1});
   const [submitting, setSubmitting] = useState(false);
+  const [editingPost, setEditingPost] = useState(null);
+  const [editForm, setEditForm] = useState({title: '', body: ''});
+  
 
   const fetchPosts =async () => {
     try{

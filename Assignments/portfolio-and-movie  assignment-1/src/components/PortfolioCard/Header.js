@@ -2,13 +2,13 @@ import './Header.css'
 import Avatar from './Avatar';
 
 
-function Header(){
+function Header({ name, role, avatar }){
     return(
         <div className='header-container'>
-            <Avatar/>
+            <Avatar avatarImg={avatar}/>
             <div className='header-content'>
-                <h1 className='name'>Ayush Gevariya</h1>
-                <p className='role'>Software Engineer & Developer</p>
+                <h1 className='name'>{name}</h1>
+                <p className='role'>{role}</p>
             </div>
         </div>
     );

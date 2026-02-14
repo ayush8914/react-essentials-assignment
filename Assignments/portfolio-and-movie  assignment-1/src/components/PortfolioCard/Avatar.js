@@ -1,9 +1,9 @@
 import './Avatar.css'
 
-function Avatar() {
+function Avatar(props) {
     return (
         <div className='avatar-container'>
-            <img src="/avatar.jpg" alt='profile' className='avatar'/>
+            <img src={props.avatarImg} alt='profile' className='avatar'/>
             <div className='avatar-boarder'></div>
         </div>
     );
