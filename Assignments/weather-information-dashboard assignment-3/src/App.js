@@ -62,9 +62,7 @@ useEffect(() => {
 
   fetchWeather(city);
 
-  // return () => {
-  //   controller.abort();
-  // };
+  
 }, [city, API_KEY]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
@@ -73,7 +71,6 @@ useEffect(() => {
     e.preventDefault();
     if (searchInput.trim()) {
       setCity(searchInput.trim());
-      // setSearchInput('');
     }
   };
 
