@@ -15,6 +15,7 @@ function App() {
 useEffect(() => {
   const controller = new AbortController();
 
+
   const fetchWeather = async (cityName) => {
     if (!cityName?.trim()) return;
 
@@ -61,9 +62,9 @@ useEffect(() => {
 
   fetchWeather(city);
 
-  return () => {
-    controller.abort();
-  };
+  // return () => {
+  //   controller.abort();
+  // };
 }, [city, API_KEY]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
