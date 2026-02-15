@@ -34,13 +34,13 @@ useEffect(() => {
       }
 
       const data = await response.json();
-      // Only set state if not aborted
+
       if (!controller.signal.aborted) {
         setWeather({
         temp: Math.round(data.main.temp),
         feels_like: Math.round(data.main.feels_like),
         humidity: data.main.humidity,
-        wind: Math.round(data.wind.speed * 3.6), // m/s → km/h
+        wind: Math.round(data.wind.speed * 3.6),
         condition: data.weather[0].main,
         description: data.weather[0].description,
         icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
@@ -72,7 +72,7 @@ useEffect(() => {
     e.preventDefault();
     if (searchInput.trim()) {
       setCity(searchInput.trim());
-      setSearchInput('');
+      // setSearchInput('');
     }
   };
 
