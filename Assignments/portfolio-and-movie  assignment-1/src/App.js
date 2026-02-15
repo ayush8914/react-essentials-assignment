@@ -5,22 +5,22 @@ import MovieCard from './components/MovieInterface/MovieCard';
 import Header from './components/Header';
 import { useState } from 'react';
 
-function App(){
+function App() {
   const [activePage, setActivePage] = useState('portfolio');
 
-  return(
+  return (
     <div className="App">
-      <div>
-        <Header active={activePage} setActive={setActivePage} />
-      </div>
-      <div>
-        {activePage === 'portfolio' && <PortfolioCard/> }
-      </div>
-      <div className='MovieExpolrer'>
-        {activePage === 'movies' && <MovieCard movies={movies}/> }
-      </div>
+      <Header active={activePage} setActive={setActivePage} />
+      
+      {activePage === 'portfolio' && <PortfolioCard />}
+      
+      {activePage === 'movies' && (
+        <div className="movie-explorer-wrapper">
+          <MovieCard movies={movies} />
+        </div>
+      )}
     </div>
   );
 }
 
-export default App
+export default App;
