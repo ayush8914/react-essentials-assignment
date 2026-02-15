@@ -9,7 +9,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.4rem;
+margin: 0 auto;
+
+  
 }
 
 .nav {
@@ -18,8 +20,6 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 1280px;
-  gap: 0.4rem;
-  padding: 0.6rem 1.2rem;
   margin: 0;
   width: 100%;
 }
