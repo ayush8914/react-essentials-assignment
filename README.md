@@ -22,7 +22,7 @@ Task Manager Application using React Context API & useReducer
 Weather Information Dashboard using useEffect, API Fetching & Side-Effect Management
 
 🔗 Live Demo:  
-👉 https://react-essentials-assignment-psex.vercel.app/
+👉 https://react-essentials-assignment-6h7h.vercel.app/
 
 ---
 
