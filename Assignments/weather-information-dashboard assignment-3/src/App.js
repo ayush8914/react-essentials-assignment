@@ -13,8 +13,6 @@ function App() {
 
 
 useEffect(() => {
-  const controller = new AbortController();
-
 
   const fetchWeather = async (cityName) => {
     if (!cityName?.trim()) return;
@@ -24,10 +22,7 @@ useEffect(() => {
     setWeather(null);
 
     try {
-      const response = await fetch(
-        `${BASE_URL}?q=${cityName}&appid=${API_KEY}&units=metric`,
-        { signal: controller.signal }
-      );
+      const response = await fetch(`${BASE_URL}?q=${cityName}&appid=${API_KEY}&units=metric`);
 
       if (!response.ok) {
         if (response.status === 404) throw new Error("City not found");
@@ -36,7 +31,6 @@ useEffect(() => {
 
       const data = await response.json();
 
-      if (!controller.signal.aborted) {
         setWeather({
         temp: Math.round(data.main.temp),
         feels_like: Math.round(data.main.feels_like),
@@ -48,22 +42,18 @@ useEffect(() => {
         cityName: data.name,
         country: data.sys.country
       });
-      }
+      
     } catch (err) {
-      if (err.name !== "AbortError") {
         setError(err.message);
-      }
     } finally {
-      if (!controller.signal.aborted) {
         setLoading(false);
-      }
     }
   };
 
   fetchWeather(city);
 
   
-}, [city, API_KEY]); // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [city]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
 
